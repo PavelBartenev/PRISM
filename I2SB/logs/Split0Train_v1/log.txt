@@ -1,0 +1,117 @@
+[15:49:15] INFO     (0:00:00) =======================================================                                                                 
+           INFO     (0:00:00)          Image-to-Image Schrodinger Bridge                                                                              
+           INFO     (0:00:00) =======================================================                                                                 
+           INFO     (0:00:00) Command used:                                                                                                           
+                    my_train.py --name Split0Train_v1 --dataset-dir /workspace/MRI-inpainting-project/data/train_patches_v3 --batch-size 4            
+                    --microbatch 2 --log-dir /workspace/MRI-inpainting-project/I2SB/logs/Split0Train_v1 --split-id 0 --splits-filename                
+                    stratified_8_cv_all.npy --gpu-id 0 --num-itr 100 --save-model-iter 90 --corrupt inpaint                                           
+           INFO     (0:00:00) Experiment ID: Split0Train_v1                                                                                           
+           INFO     (0:00:00) Saved options pickle to results/Split0Train_v1/options.pkl!                                                             
+[15:49:17] INFO     (0:00:01) [Diffusion] Built I2SB diffusion: steps=1000!                                                                           
+[15:49:21] INFO     (0:00:06) [Net] Initialized network from ckpt_pkl='data/256x256_diffusion_uncond_fixedsigma.pkl'! Size=552807171!                 
+[15:49:22] INFO     (0:00:07) [Net] Loaded pretrained adm ckpt_pt='data/256x256_diffusion_uncond_fixedsigma.pt'!                                      
+[15:49:23] INFO     (0:00:08) [Opt] Built AdamW optimizer optim_dict={'lr': 5e-05, 'weight_decay': 0.0}!                                              
+           INFO     (0:00:08) [Opt] Built lr step scheduler sched_dict={'step_size': 1000, 'gamma': 0.99}!                                            
+[15:49:32] INFO     (0:00:17) train_it 1/100 | lr:5.00e-05 | loss:+0.0076                                                                             
+[15:49:44] INFO     (0:00:28) Saved latest(it=0) checkpoint to opt.ckpt_path=PosixPath('results/Split0Train_v1')!                                     
+[15:49:45] INFO     (0:00:30) train_it 2/100 | lr:5.00e-05 | loss:+0.2128                                                                             
+[15:49:47] INFO     (0:00:31) train_it 3/100 | lr:5.00e-05 | loss:+0.1025                                                                             
+[15:49:48] INFO     (0:00:32) train_it 4/100 | lr:5.00e-05 | loss:+0.0000                                                                             
+[15:49:49] INFO     (0:00:34) train_it 5/100 | lr:5.00e-05 | loss:+0.0002                                                                             
+[15:49:50] INFO     (0:00:35) train_it 6/100 | lr:5.00e-05 | loss:+0.7688                                                                             
+[15:49:52] INFO     (0:00:36) train_it 7/100 | lr:5.00e-05 | loss:+0.0000                                                                             
+[15:49:53] INFO     (0:00:37) train_it 8/100 | lr:5.00e-05 | loss:+0.0000                                                                             
+[15:49:54] INFO     (0:00:39) train_it 9/100 | lr:5.00e-05 | loss:+0.1334                                                                             
+[15:49:55] INFO     (0:00:40) train_it 10/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:49:57] INFO     (0:00:41) train_it 11/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:49:58] INFO     (0:00:42) train_it 12/100 | lr:5.00e-05 | loss:+0.1452                                                                            
+[15:49:59] INFO     (0:00:43) train_it 13/100 | lr:5.00e-05 | loss:+0.0438                                                                            
+[15:50:00] INFO     (0:00:45) train_it 14/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:01] INFO     (0:00:46) train_it 15/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:03] INFO     (0:00:47) train_it 16/100 | lr:5.00e-05 | loss:+0.0583                                                                            
+[15:50:04] INFO     (0:00:49) train_it 17/100 | lr:5.00e-05 | loss:+0.0174                                                                            
+[15:50:05] INFO     (0:00:50) train_it 18/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:07] INFO     (0:00:51) train_it 19/100 | lr:5.00e-05 | loss:+0.0178                                                                            
+[15:50:08] INFO     (0:00:52) train_it 20/100 | lr:5.00e-05 | loss:+0.0124                                                                            
+[15:50:09] INFO     (0:00:54) train_it 21/100 | lr:5.00e-05 | loss:+0.0042                                                                            
+[15:50:11] INFO     (0:00:55) train_it 22/100 | lr:5.00e-05 | loss:+0.0063                                                                            
+[15:50:12] INFO     (0:00:56) train_it 23/100 | lr:5.00e-05 | loss:+0.0005                                                                            
+[15:50:13] INFO     (0:00:58) train_it 24/100 | lr:5.00e-05 | loss:+0.0022                                                                            
+[15:50:14] INFO     (0:00:59) train_it 25/100 | lr:5.00e-05 | loss:+0.0021                                                                            
+[15:50:16] INFO     (0:01:00) train_it 26/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:17] INFO     (0:01:01) train_it 27/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:18] INFO     (0:01:03) train_it 28/100 | lr:5.00e-05 | loss:+0.0538                                                                            
+[15:50:19] INFO     (0:01:04) train_it 29/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:21] INFO     (0:01:05) train_it 30/100 | lr:5.00e-05 | loss:+0.0255                                                                            
+[15:50:22] INFO     (0:01:07) train_it 31/100 | lr:5.00e-05 | loss:+0.0007                                                                            
+[15:50:23] INFO     (0:01:08) train_it 32/100 | lr:5.00e-05 | loss:+0.0125                                                                            
+[15:50:25] INFO     (0:01:09) train_it 33/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:26] INFO     (0:01:10) train_it 34/100 | lr:5.00e-05 | loss:+0.0232                                                                            
+[15:50:27] INFO     (0:01:12) train_it 35/100 | lr:5.00e-05 | loss:+0.0174                                                                            
+[15:50:28] INFO     (0:01:13) train_it 36/100 | lr:5.00e-05 | loss:+0.0045                                                                            
+[15:50:30] INFO     (0:01:14) train_it 37/100 | lr:5.00e-05 | loss:+0.0354                                                                            
+[15:50:31] INFO     (0:01:16) train_it 38/100 | lr:5.00e-05 | loss:+0.0075                                                                            
+[15:50:32] INFO     (0:01:17) train_it 39/100 | lr:5.00e-05 | loss:+0.0102                                                                            
+[15:50:34] INFO     (0:01:18) train_it 40/100 | lr:5.00e-05 | loss:+0.0073                                                                            
+[15:50:35] INFO     (0:01:19) train_it 41/100 | lr:5.00e-05 | loss:+0.0072                                                                            
+[15:50:36] INFO     (0:01:21) train_it 42/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:38] INFO     (0:01:22) train_it 43/100 | lr:5.00e-05 | loss:+0.0109                                                                            
+[15:50:39] INFO     (0:01:23) train_it 44/100 | lr:5.00e-05 | loss:+0.0050                                                                            
+[15:50:40] INFO     (0:01:25) train_it 45/100 | lr:5.00e-05 | loss:+0.0032                                                                            
+[15:50:41] INFO     (0:01:26) train_it 46/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:43] INFO     (0:01:27) train_it 47/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:44] INFO     (0:01:28) train_it 48/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:45] INFO     (0:01:30) train_it 49/100 | lr:5.00e-05 | loss:+0.0056                                                                            
+[15:50:47] INFO     (0:01:31) train_it 50/100 | lr:5.00e-05 | loss:+0.0171                                                                            
+[15:50:48] INFO     (0:01:32) train_it 51/100 | lr:5.00e-05 | loss:+0.0016                                                                            
+[15:50:49] INFO     (0:01:34) train_it 52/100 | lr:5.00e-05 | loss:+0.0046                                                                            
+[15:50:50] INFO     (0:01:35) train_it 53/100 | lr:5.00e-05 | loss:+0.0059                                                                            
+[15:50:52] INFO     (0:01:36) train_it 54/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:50:53] INFO     (0:01:37) train_it 55/100 | lr:5.00e-05 | loss:+0.0125                                                                            
+[15:50:54] INFO     (0:01:39) train_it 56/100 | lr:5.00e-05 | loss:+0.0002                                                                            
+[15:50:56] INFO     (0:01:40) train_it 57/100 | lr:5.00e-05 | loss:+0.0057                                                                            
+[15:50:57] INFO     (0:01:41) train_it 58/100 | lr:5.00e-05 | loss:+0.0160                                                                            
+[15:50:58] INFO     (0:01:43) train_it 59/100 | lr:5.00e-05 | loss:+0.0080                                                                            
+[15:51:00] INFO     (0:01:44) train_it 60/100 | lr:5.00e-05 | loss:+0.0026                                                                            
+[15:51:01] INFO     (0:01:45) train_it 61/100 | lr:5.00e-05 | loss:+0.0005                                                                            
+[15:51:02] INFO     (0:01:47) train_it 62/100 | lr:5.00e-05 | loss:+0.0112                                                                            
+[15:51:04] INFO     (0:01:48) train_it 63/100 | lr:5.00e-05 | loss:+0.0131                                                                            
+[15:51:05] INFO     (0:01:49) train_it 64/100 | lr:5.00e-05 | loss:+0.0080                                                                            
+[15:51:06] INFO     (0:01:51) train_it 65/100 | lr:5.00e-05 | loss:+0.0101                                                                            
+[15:51:07] INFO     (0:01:52) train_it 66/100 | lr:5.00e-05 | loss:+0.0145                                                                            
+[15:51:09] INFO     (0:01:53) train_it 67/100 | lr:5.00e-05 | loss:+0.0123                                                                            
+[15:51:10] INFO     (0:01:55) train_it 68/100 | lr:5.00e-05 | loss:+0.0008                                                                            
+[15:51:11] INFO     (0:01:56) train_it 69/100 | lr:5.00e-05 | loss:+0.0036                                                                            
+[15:51:13] INFO     (0:01:57) train_it 70/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:51:14] INFO     (0:01:58) train_it 71/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:51:15] INFO     (0:02:00) train_it 72/100 | lr:5.00e-05 | loss:+0.0019                                                                            
+[15:51:16] INFO     (0:02:01) train_it 73/100 | lr:5.00e-05 | loss:+0.0047                                                                            
+[15:51:18] INFO     (0:02:02) train_it 74/100 | lr:5.00e-05 | loss:+0.0068                                                                            
+[15:51:19] INFO     (0:02:04) train_it 75/100 | lr:5.00e-05 | loss:+0.0054                                                                            
+[15:51:20] INFO     (0:02:05) train_it 76/100 | lr:5.00e-05 | loss:+0.0013                                                                            
+[15:51:22] INFO     (0:02:06) train_it 77/100 | lr:5.00e-05 | loss:+0.0009                                                                            
+[15:51:23] INFO     (0:02:08) train_it 78/100 | lr:5.00e-05 | loss:+0.0023                                                                            
+[15:51:24] INFO     (0:02:09) train_it 79/100 | lr:5.00e-05 | loss:+0.0027                                                                            
+[15:51:26] INFO     (0:02:10) train_it 80/100 | lr:5.00e-05 | loss:+0.0003                                                                            
+[15:51:27] INFO     (0:02:11) train_it 81/100 | lr:5.00e-05 | loss:+0.0001                                                                            
+[15:51:28] INFO     (0:02:13) train_it 82/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:51:29] INFO     (0:02:14) train_it 83/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:51:31] INFO     (0:02:15) train_it 84/100 | lr:5.00e-05 | loss:+0.0080                                                                            
+[15:51:32] INFO     (0:02:17) train_it 85/100 | lr:5.00e-05 | loss:+0.0006                                                                            
+[15:51:33] INFO     (0:02:18) train_it 86/100 | lr:5.00e-05 | loss:+0.0036                                                                            
+[15:51:35] INFO     (0:02:19) train_it 87/100 | lr:5.00e-05 | loss:+0.0019                                                                            
+[15:51:36] INFO     (0:02:20) train_it 88/100 | lr:5.00e-05 | loss:+0.0026                                                                            
+[15:51:37] INFO     (0:02:22) train_it 89/100 | lr:5.00e-05 | loss:+0.0019                                                                            
+[15:51:39] INFO     (0:02:23) train_it 90/100 | lr:5.00e-05 | loss:+0.0028                                                                            
+[15:51:40] INFO     (0:02:25) train_it 91/100 | lr:5.00e-05 | loss:+0.0032                                                                            
+[15:52:24] INFO     (0:03:08) Saved latest(it=90) checkpoint to opt.ckpt_path=PosixPath('results/Split0Train_v1')!                                    
+[15:52:25] INFO     (0:03:09) train_it 92/100 | lr:5.00e-05 | loss:+0.0010                                                                            
+[15:52:26] INFO     (0:03:11) train_it 93/100 | lr:5.00e-05 | loss:+0.0013                                                                            
+[15:52:28] INFO     (0:03:12) train_it 94/100 | lr:5.00e-05 | loss:+0.0025                                                                            
+[15:52:29] INFO     (0:03:13) train_it 95/100 | lr:5.00e-05 | loss:+0.0043                                                                            
+[15:52:30] INFO     (0:03:15) train_it 96/100 | lr:5.00e-05 | loss:+0.0022                                                                            
+[15:52:31] INFO     (0:03:16) train_it 97/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:52:33] INFO     (0:03:17) train_it 98/100 | lr:5.00e-05 | loss:+0.0029                                                                            
+[15:52:34] INFO     (0:03:18) train_it 99/100 | lr:5.00e-05 | loss:+0.0000                                                                            
+[15:52:35] INFO     (0:03:20) train_it 100/100 | lr:5.00e-05 | loss:+0.0023                                                                           
+           INFO     (0:03:20) Finish!                                                                                                                 

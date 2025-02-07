@@ -1,0 +1,15 @@
+data/
+I2SB/data/
+I2SB/results/
+I2SB/run_logs/
+I2SB/my-observations
+med-ddpm-main/dataset/
+med-ddpm-main/exports/
+med-ddpm-main/gen_samples/
+med-ddpm-main/images/
+med-ddpm-main/model/
+med-ddpm-main/scripts/logs/
+med-ddpm-main/scripts/results/
+med-ddpm-main/notes.txt
+DDPM_Pseudo3D/
+3dGAN-masks/
