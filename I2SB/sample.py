@@ -11,6 +11,7 @@ import argparse
 import random
 from pathlib import Path
 from easydict import EasyDict as edict
+import psutil
 
 import numpy as np
 
@@ -23,10 +24,12 @@ import torchvision.utils as tu
 
 from logger import Logger
 import distributed_util as dist_util
-from i2sb import Runner, download_ckpt
+from i2sb import Runner, download_ckpt, MyRunner
 from corruption import build_corruption
 from dataset import imagenet
 from i2sb import ckpt_util
+
+from dataset import mri_datasets
 
 import colored_traceback.always
 from ipdb import set_trace as debug
@@ -110,19 +113,10 @@ def get_recon_imgs_fn(opt, nfe):
     )
     return recon_imgs_fn
 
-def compute_batch(ckpt_opt, corrupt_type, corrupt_method, out):
-    if "inpaint" in corrupt_type:
-        clean_img, y, mask = out
-        corrupt_img = clean_img * (1. - mask) + mask
-        x1          = clean_img * (1. - mask) + mask * torch.randn_like(clean_img)
-    elif corrupt_type == "mixture":
-        clean_img, corrupt_img, y = out
-        mask = None
-    else:
-        clean_img, y = out
-        mask = None
-        corrupt_img = corrupt_method(clean_img.to(opt.device))
-        x1 = corrupt_img.to(opt.device)
+def compute_batch(ckpt_opt, out):
+    clean_img, mask, y = out
+    corrupt_img = clean_img * (1. - mask) + mask
+    x1          = clean_img * (1. - mask) + mask * torch.randn_like(clean_img)
 
     cond = x1.detach() if ckpt_opt.cond_x1 else None
     if ckpt_opt.add_x1_noise: # only for decolor
@@ -140,10 +134,17 @@ def main(opt):
     nfe = opt.nfe or ckpt_opt.interval-1
 
     # build corruption method
-    corrupt_method = build_corruption(opt, log, corrupt_type=corrupt_type)
+    #corrupt_method = build_corruption(opt, log, corrupt_type=corrupt_type)
 
     # build imagenet val dataset
-    val_dataset = build_val_dataset(opt, log, corrupt_type)
+    #val_dataset = build_val_dataset(opt, log, corrupt_type)
+
+    if opt.train_val == "val":
+        val_dataset = mri_datasets.HealthyPatchesDatasetI2SB(opt.mri_path, opt.mask_path, opt.patch_mask_path, flair=opt.flair)
+    else:
+        val_dataset = mri_datasets.TrainPatchesDatasetI2SB(opt.mri_path, train=False, 
+                                                           splits_filename='stratified_8_cv_filtered_2.npy', split_id=0)
+        
     n_samples = len(val_dataset)
 
     # build dataset per gpu and loader
@@ -153,10 +154,11 @@ def main(opt):
     )
 
     # build runner
-    runner = Runner(ckpt_opt, log, save_opt=False)
+    runner = MyRunner(ckpt_opt, log, save_opt=False)
 
     # handle use_fp16 for ema
     if opt.use_fp16:
+        print('\n using fp16 \n')
         runner.ema.copy_to() # copy weight from ema to net
         runner.net.diffusion_model.convert_to_fp16()
         runner.ema = ExponentialMovingAverage(runner.net.parameters(), decay=0.99) # re-init ema with fp16 weight
@@ -170,16 +172,17 @@ def main(opt):
     num = 0
     for loader_itr, out in enumerate(val_loader):
 
-        corrupt_img, x1, mask, cond, y = compute_batch(ckpt_opt, corrupt_type, corrupt_method, out)
+        corrupt_img, x1, mask, cond, y = compute_batch(ckpt_opt, out)
 
         xs, _ = runner.ddpm_sampling(
             ckpt_opt, x1, mask=mask, cond=cond, clip_denoise=opt.clip_denoise, nfe=nfe, verbose=opt.n_gpu_per_node==1
         )
+        print(xs.shape, xs.dtype)
         recon_img = xs[:, 0, ...].to(opt.device)
 
         assert recon_img.shape == corrupt_img.shape
 
-        if loader_itr == 0 and opt.global_rank == 0: # debug
+        if loader_itr < 40 and opt.global_rank == 0: # debug
             os.makedirs(".debug", exist_ok=True)
             tu.save_image((corrupt_img+1)/2, ".debug/corrupt.png")
             tu.save_image((recon_img+1)/2, ".debug/recon.png")
@@ -219,13 +222,17 @@ if __name__ == '__main__':
     parser.add_argument("--num-proc-node",  type=int,  default=1,           help="The number of nodes in multi node env")
     parser.add_argument("--gpu-id",         type=int,  default=0,           help="gpu id to run on (0, 1, 2, ...)")
     parser.add_argument("--master-port",    type=str,  default="6020",      help="master port for distributed_util.py")
+    parser.add_argument("--train-val",   type=str,  default="val",       help="")
 
     # data
     parser.add_argument("--image-size",     type=int,  default=256)
     parser.add_argument("--dataset-dir",    type=Path, default="/dataset",  help="path to LMDB dataset")
     parser.add_argument("--partition",      type=str,  default=None,        help="e.g., '0_4' means the first 25% of the dataset")
     parser.add_argument("--mask-dir",       type=str,  default="data",      help="directory with masks for inpainting")
-
+    parser.add_argument("--mri-path",       type=str,  default="data",      help="directory with my mris for inpainting")
+    parser.add_argument("--mask-path",      type=str,  default="data",      help="directory with my masks for inpainting")
+    parser.add_argument("--patch-mask-path",type=str,  default="data",      help="directory with my patch masks for inpainting")
+    parser.add_argument("--flair",          type=bool, default=None,        help="sample flair")
     # sample
     parser.add_argument("--batch-size",     type=int,  default=32)
     parser.add_argument("--ckpt",           type=str,  default=None,        help="the checkpoint name from which we wish to sample")

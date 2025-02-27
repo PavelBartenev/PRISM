@@ -14,3 +14,6 @@ med-ddpm-main/notes.txt
 DDPM_Pseudo3D/
 3dGAN-masks/
 segm_metrics/
+I2SB/logs/
+I2SB/notebooks/playground.ipynb
+I2SB/utils/data_preparation.ipynb

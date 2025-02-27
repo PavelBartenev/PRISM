@@ -24,7 +24,9 @@ from logger import Logger
 from distributed_util import init_processes
 from corruption import build_corruption
 from dataset import imagenet
-from i2sb import Runner, download_ckpt
+from dataset import mri_datasets
+
+from i2sb import MyRunner, download_ckpt
 
 import colored_traceback.always
 from ipdb import set_trace as debug
@@ -47,8 +49,10 @@ def create_training_options():
     parser.add_argument("--name",           type=str,   default=None,        help="experiment ID")
     parser.add_argument("--ckpt",           type=str,   default=None,        help="resumed checkpoint name")
     parser.add_argument("--gpu",            type=int,   default=None,        help="set only if you wish to run on a particular device")
+    parser.add_argument("--gpu-id",         type=int,  default=0,           help="gpu id to run on (0, 1, 2, ...)")
     parser.add_argument("--n-gpu-per-node", type=int,   default=1,           help="number of gpu on each node")
     parser.add_argument("--master-address", type=str,   default='localhost', help="address for master")
+    parser.add_argument("--master-port",    type=str,   default='6020',      help="port")
     parser.add_argument("--node-rank",      type=int,   default=0,           help="the index of node")
     parser.add_argument("--num-proc-node",  type=int,   default=1,           help="The number of nodes in multi node env")
     # parser.add_argument("--amp",            action="store_true")
@@ -81,10 +85,14 @@ def create_training_options():
     # --------------- path and logging ---------------
     parser.add_argument("--dataset-dir",    type=Path,  default="/dataset",  help="path to LMDB dataset")
     parser.add_argument("--log-dir",        type=Path,  default=".log",      help="path to log std outputs and writer data")
+    parser.add_argument("--split-id",       type=int,   default=None,        help="split id")
+    parser.add_argument("--flair",          type=bool,  default=None,        help="train on flair")
+    parser.add_argument("--splits-filename",type=str,   default=None,        help="name of file with splits description")
     parser.add_argument("--log-writer",     type=str,   default=None,        help="log writer: can be tensorbard, wandb, or None")
     parser.add_argument("--wandb-api-key",  type=str,   default=None,        help="unique API key of your W&B account; see https://wandb.ai/authorize")
     parser.add_argument("--wandb-user",     type=str,   default=None,        help="user name of your W&B account")
     parser.add_argument("--save-model-iter",type=int,   default=5000,        help="save model checkpoint")
+    
 
     opt = parser.parse_args()
 
@@ -128,8 +136,7 @@ def main(opt):
         set_seed(opt.seed + opt.global_rank)
 
     # build imagenet dataset
-    train_dataset = imagenet.build_lmdb_dataset(opt, log, train=True)
-    val_dataset   = imagenet.build_lmdb_dataset(opt, log, train=False)
+    train_dataset = mri_datasets.TrainPatchesDatasetI2SB(opt.dataset_dir, split_id=opt.split_id, splits_filename=opt.splits_filename, flair=opt.flair)
     # note: images should be normalized to [-1,1] for corruption methods to work properly
 
     if opt.corrupt == "mixture":
@@ -137,17 +144,14 @@ def main(opt):
         train_dataset = mix.MixtureCorruptDatasetTrain(opt, train_dataset)
         val_dataset = mix.MixtureCorruptDatasetVal(opt, val_dataset)
 
-    # build corruption method
-    corrupt_method = build_corruption(opt, log)
-
-    run = Runner(opt, log)
-    run.train(opt, train_dataset, val_dataset, corrupt_method)
+    run = MyRunner(opt, log)
+    run.train(opt, train_dataset)
     log.info("Finish!")
 
 if __name__ == '__main__':
     opt = create_training_options()
 
-    assert opt.corrupt is not None
+    #assert opt.corrupt is not None
 
     # one-time download: ADM checkpoint
     download_ckpt("data/")
@@ -171,7 +175,7 @@ if __name__ == '__main__':
         for p in processes:
             p.join()
     else:
-        torch.cuda.set_device(0)
+        torch.cuda.set_device(opt.gpu_id)
         opt.global_rank = 0
         opt.local_rank = 0
         opt.global_size = 1
