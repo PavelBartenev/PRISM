@@ -18,7 +18,7 @@ conda activate i2sb
 #### 3D Conditional Diffusion
 
 ```
-cd med-ddpm-main
+cd 3d_conditional_diffusion
 conda create -n diffusion3d python=3.10.0
 conda activate diffusion3d
 pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu116
