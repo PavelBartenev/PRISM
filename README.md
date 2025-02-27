@@ -48,13 +48,17 @@ To incorporate patches with generated pathology into MRI you should use the Jupy
 
 To run the training of the model:
 
+```
 python3 train_inpainting.py --fcd_patches_dataset --with_condition --loss_type l1_masked --inputfolder $DATA_PATH --results_folder $RESULTS_PATH --splits_filename $SPLITS_FILENAME --split_id $SPLIT_ID --batchsize 1 --epochs 500001 --train_lr 1e-5 --input_size 40 --depth_size 40 --num_channels 64 --channel_mult 1,2,4,4 --num_res_blocks 1 --timesteps 250 --save_and_sample_every 250000
+```
 
 Before running the generation you need to obtain masks for synthetic pathologies. This can be done using Jupyter notebooks from 3DUnet-masks folder. 
 
 To run the generation:
 
+```
 python3 sample_inpainting.py --ckpt_path $CKPT_NAME --mri_dir $HEALTHY_DATA_DIR --mask_dir $MASKS_DIR --patch_mask_dir $PATCH_MASK_PATH --save_dir $SAVE_DIR
+```
 
 
 
