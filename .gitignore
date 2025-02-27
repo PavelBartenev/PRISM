@@ -13,3 +13,4 @@ med-ddpm-main/scripts/results/
 med-ddpm-main/notes.txt
 DDPM_Pseudo3D/
 3dGAN-masks/
+segm_metrics/
