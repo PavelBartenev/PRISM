@@ -34,8 +34,7 @@ This repository contains scripts for training and inference of a neural network 
    ```bash
    pip install -r requirements.txt
    ```
- MONAI_DATA_DIRECTORY=./MONAI_TMP
-   ```
+
 
 ## Data Preparation
 
@@ -61,12 +60,14 @@ label_path/
 
 - `augm_data_path`: Directory containing the augmented data files.
 The `augm_data_path` should be organized into splits, each containing `masks` and `t1` directories:
+```
 augm_data_path/
 └── split{i}/
     ├── masks/
     │   ├── sub-{sub_ind}_t1_brain-final.nii.gz
     └── t1/
         └── sub-{sub_ind}_t1_brain-final.nii.gz
+```
 
 Also your directory should have a `metadata/stratified.npy` file with stratification into folds for training and inference. The structure of the file is list of dicts with 'train' and 'val' keys. Name your generated subjects starting with 'C'. 
 
