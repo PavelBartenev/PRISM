@@ -60,6 +60,9 @@ To run the generation:
 python3 sample_inpainting.py --ckpt_path $CKPT_NAME --mri_dir $HEALTHY_DATA_DIR --mask_dir $MASKS_DIR --patch_mask_dir $PATCH_MASK_PATH --save_dir $SAVE_DIR
 ```
 
+#### Checkpoints
+Checkpoints of trained models can be found by the [link](https://drive.google.com/drive/folders/1_rlLW1DtvZLv4e6n52zJJifvrmciPv8Q?usp=drive_link)
+
 
 
 
