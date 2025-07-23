@@ -7,12 +7,12 @@ This is code for PRISM paper. Here we propose a method for generating synthetic 
 In this repo you can find two models for synthetic pathological MRI generation: I2SB and 3D Conditional Diffusion. 
 We strongly encourage you to use separate environments for work with these models as described below.
 
-#### I2SB
+#### 2D Conditional Diffusion
 
 ```
-cd I2SB
+cd 2d_conditional_diffusion
 conda env create --file requirements.yaml
-conda activate i2sb
+conda activate diffusion2d
 ```
 
 #### 3D Conditional Diffusion

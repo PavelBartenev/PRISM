@@ -1,4 +1,4 @@
-name: i2sb
+name: diffusion2d
 channels:
   - anaconda
   - pytorch

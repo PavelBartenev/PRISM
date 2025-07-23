@@ -49,13 +49,13 @@ def create_training_options():
     parser.add_argument("--name",           type=str,   default=None,        help="experiment ID")
     parser.add_argument("--ckpt",           type=str,   default=None,        help="resumed checkpoint name")
     parser.add_argument("--gpu",            type=int,   default=None,        help="set only if you wish to run on a particular device")
-    parser.add_argument("--gpu-id",         type=int,  default=0,           help="gpu id to run on (0, 1, 2, ...)")
+    parser.add_argument("--gpu-id",         type=int,   default=0,           help="gpu id to run on (0, 1, 2, ...)")
     parser.add_argument("--n-gpu-per-node", type=int,   default=1,           help="number of gpu on each node")
     parser.add_argument("--master-address", type=str,   default='localhost', help="address for master")
     parser.add_argument("--master-port",    type=str,   default='6020',      help="port")
     parser.add_argument("--node-rank",      type=int,   default=0,           help="the index of node")
     parser.add_argument("--num-proc-node",  type=int,   default=1,           help="The number of nodes in multi node env")
-    # parser.add_argument("--amp",            action="store_true")
+    # parser.add_argument("--amp",          action="store_true")
 
     # --------------- SB model ---------------
     parser.add_argument("--image-size",     type=int,   default=256)
